@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="/images/pokemon_7025.ico">
+    <title>PokeDev</title>
+</head>
+<body>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#"><img id="logo" src="images/pokedev.png" alt="Logo PokeDev"/></a>
+        </div>
+        <div id="busqueda">
+            <form id="searchForm" class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input id="searchInput" type="text" class="form-control" placeholder="Buscar" name="buscar">
+                    <label id="TextoB" for="searchMethod">Escoge método:</label>
+                    <select id="searchMethod" name="searchMethod">
+                        <option value="1">Promises</option>
+                        <option value="2">Async/Await</option>
+                    </select>
+                </div>
+                <button id="searchButton" type="submit" class="btn btn-danger">Buscar</button>
+            </form>
+
+        </div>
+        
+    </div>
+</nav>
+
+<div id="pokemonContainer" class="container">
+    <!-- Aquí se mostrarán los resultados de la búsqueda y la paginación -->
+</div>
+<div>
+  <ul class="pagination" id="pagination"></ul>
+</div>
+<div id="pokemonModal" class="modal">
+  <div id="modalContent" class="modal-content">
+    <span class="close">&times;</span> <!-- Botón de cierre (x) -->
+    <div id="pokemonDetails"></div> <!-- Contenido del modal -->
+  </div>
+</div>
+     
+      <script type="module" src="js/main.js"></script>
+</body>
+</html>
