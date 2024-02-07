@@ -3,7 +3,7 @@ const searchInput = document.getElementById('searchInput');
 const searchMethod = document.getElementById('searchMethod');
 const pokemonContainer = document.getElementById('pokemonContainer');
 const paginationContainer = document.getElementById('pagination');
-const pokemonModal = document.getElementById('pokemonModal');
+//const pokemonModal = document.getElementById('pokemonModal');
 const modalContent = document.getElementById('modalContent');
 const pokemonDetails = document.getElementById('pokemonDetails');
 
@@ -137,12 +137,7 @@ function navigatePokemon(direction) {
 function openModal() {
     pokemonModal.style.display = 'block';
 }
-// Cerrar el modal cuando se hace clic en el botón de cerrar (x)
-modalContent.addEventListener('click', (e) => {
-    if (e.target.classList.contains('close')) {
-        closeModal();
-    }
-});
+
 
 function closeModal() {
     pokemonModal.style.display = 'none';

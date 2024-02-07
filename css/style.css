@@ -93,10 +93,6 @@
     }
 }
 
-.nav-button {
-  /* Estilos comunes para todos los botones de navegación */
-  /* Agrega estilos específicos para todos los botones de navegación aquí */
-}
 
 .next-button {
   float: right;
@@ -104,7 +100,7 @@
   color: white; /* Color del texto */
   border: none; /* Sin borde */
   padding: 10px 20px; /* Relleno interno */
-  font-size: 16px; /* Tamaño de la fuente */
+  font-size: 25px; /* Tamaño de la fuente */
   cursor: pointer; /* Cursor al pasar por encima */
 }
 
@@ -119,7 +115,7 @@
   color: white; /* Color del texto */
   border: none; /* Sin borde */
   padding: 10px 20px; /* Relleno interno */
-  font-size: 16px; /* Tamaño de la fuente */
+  font-size: 25px; /* Tamaño de la fuente */
   cursor: pointer; /* Cursor al pasar por encima */
 }
 
@@ -130,11 +126,13 @@
 
 .close-button{
   float: right;
+  height: 55px;
+  width: 55px;
   background-color: #fc4a33; /* Color de fondo */
   color: white; /* Color del texto */
   border: none; /* Sin borde */
-  padding: 10px 20px; /* Relleno interno */
-  font-size: 16px; /* Tamaño de la fuente */
+  padding: 1px 10px; /* Relleno interno */
+  font-size: 20px; /* Tamaño de la fuente */
   cursor: pointer; /* Cursor al pasar por encima */
 }
 
