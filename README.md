@@ -17,18 +17,19 @@ Este proyecto se realiza como ejercicio para manejar el asincronismo y trabajar 
 
 Se trata de una Web que realiza las peticiones a la PokeApi, de esta se sacan los datos de cada Pokemon, inicialmente las imágenes se cogían también de también, pero no me convencia la calidad y he buscado otra opción en: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png, las cuales tienen mucha más calidad.
 
-<div style = 'text-align:center;'>
+<div style="margin: 0 auto; width: 600px;">
     <img src="https://miguelcorreadev.github.io/pokedev/Doc/images/pokedev.png" alt="Fitts" width="600px">
 </div>
 
 El funcionamiento de la búsqueda es sencillo, en el campo input podremos buscar por el nombre del Pokemon o por su id, la siguiente opción es buscar por __Promises__ o __Async/Await__ y a continuación haremos clic en el botón de buscar.
 
-<div style = 'text-align:center;'>
+<div style="margin: 0 auto; width: 600px;">
     <img src="https://miguelcorreadev.github.io/pokedev/Doc/images/nav_busqueda.png" alt="Fitts" width="600px">
 </div>
 
 Cuando la búsqueda es correcta, nos mostrará en pantalla únicamente ese Pokemon, si queremos que vuelvan a apareces todos podemos hacer clic en el logo de __PokeDev__ en la parte superior izquierda o realizar una __búsqueda vacía__.
-<div style = 'text-align:center;'>
+
+<div style="margin: 0 auto; width: 600px;">
     <img src="https://miguelcorreadev.github.io/pokedev/Doc/images/busqueda.png" alt="Fitts" width="600px">
 </div>
 
@@ -36,19 +37,19 @@ Si hacemos clic sobre cualquier Pokemon, se nos abrirá una pequeña ventana mod
 
 Esta programado que si de algún Pokemon no tuviera gif, que lo sustituya por la misma imagen que tiene en la ventana principal.
 
-<div style = 'text-align:center;'>
+<divstyle="margin: 0 auto;">
     <img src="https://projectpokemon.org/images/normal-sprite/charmander.gif" alt="Fitts" width="150px">
 </div>
 
 En los modales encontraremos dos botones verdes para movernos entre los pokemons próximos y un tercer botón rojo para cerrarlo.
 
-<div style = 'text-align:center;'>
+<div style="margin: 0 auto; width: 600px;">
     <img src="https://miguelcorreadev.github.io/pokedev/Doc/images/modal.png" alt="Fitts" width="600px">
 </div>
 
 En la parte inferior de cada página encontraremos un menú de paginación para poder ir avanzando y ver los cientos de Pokemons que hay cargados.
 
-<div style = 'text-align:center;'>
+<div style="margin: 0 auto; width: 600px;">
     <img src="https://miguelcorreadev.github.io/pokedev/Doc/images/paginacion.png" alt="Fitts" width="600px">
 </div>
 
