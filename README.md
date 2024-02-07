@@ -17,51 +17,39 @@ Este proyecto se realiza como ejercicio para manejar el asincronismo y trabajar 
 
 Se trata de una Web que realiza las peticiones a la PokeApi, de esta se sacan los datos de cada Pokemon, inicialmente las imágenes se cogían también de también, pero no me convencia la calidad y he buscado otra opción en: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png, las cuales tienen mucha más calidad.
 
-<div>
-    <p style = 'text-align:center;'>
+<div style = 'text-align:center;'>
     <img src="https://miguelcorreadev.github.io/pokedev/Doc/images/pokedev.png" alt="Fitts" width="600px">
-    </p>
 </div>
 
 El funcionamiento de la búsqueda es sencillo, en el campo input podremos buscar por el nombre del Pokemon o por su id, la siguiente opción es buscar por __Promises__ o __Async/Await__ y a continuación haremos clic en el botón de buscar.
 
-<div>
-    <p style = 'text-align:center;'>
+<div style = 'text-align:center;'>
     <img src="https://miguelcorreadev.github.io/pokedev/Doc/images/nav_busqueda.png" alt="Fitts" width="600px">
-    </p>
 </div>
 
 Cuando la búsqueda es correcta, nos mostrará en pantalla únicamente ese Pokemon, si queremos que vuelvan a apareces todos podemos hacer clic en el logo de __PokeDev__ en la parte superior izquierda o realizar una __búsqueda vacía__.
-<div>
-    <p style = 'text-align:center;'>
+<div style = 'text-align:center;'>
     <img src="https://miguelcorreadev.github.io/pokedev/Doc/images/busqueda.png" alt="Fitts" width="600px">
-    </p>
 </div>
 
 Si hacemos clic sobre cualquier Pokemon, se nos abrirá una pequeña ventana modal en el centro de la pantalla con más información sobre ese Pokemon y en la gran mayoría se sustituye la imagen por un gif en movimiento para dar una sensación de interactividad.
 
 Esta programado que si de algún Pokemon no tuviera gif, que lo sustituya por la misma imagen que tiene en la ventana principal.
 
-<div>
-    <p style = 'text-align:center;'>
+<div style = 'text-align:center;'>
     <img src="https://projectpokemon.org/images/normal-sprite/charmander.gif" alt="Fitts" width="150px">
-    </p>
 </div>
 
 En los modales encontraremos dos botones verdes para movernos entre los pokemons próximos y un tercer botón rojo para cerrarlo.
 
-<div>
-    <p style = 'text-align:center;'>
+<div style = 'text-align:center;'>
     <img src="https://miguelcorreadev.github.io/pokedev/Doc/images/modal.png" alt="Fitts" width="600px">
-    </p>
 </div>
 
 En la parte inferior de cada página encontraremos un menú de paginación para poder ir avanzando y ver los cientos de Pokemons que hay cargados.
 
-<div>
-    <p style = 'text-align:center;'>
+<div style = 'text-align:center;'>
     <img src="https://miguelcorreadev.github.io/pokedev/Doc/images/paginacion.png" alt="Fitts" width="600px">
-    </p>
 </div>
 
 
@@ -137,31 +125,3 @@ pokemonContainer.addEventListener('click', (e) => {
 });
 ``` 
 
-Por otro lado, cuando pasamos a pantallas más pequeñas o con menos resolución el menú anterior se adapta a un menú de hamburguesa donde tendremos un pequeño icono con 3 rallas horizontales que al presionarlo se nos desplegará  el menú hacia debajo de forma vertical.
-
-<div>
-    <p style = 'text-align:center;'>
-    <img src="https://miguelcorreadev.github.io/miguelcorrea/DOC/imagenes/nav-h.png" alt="Nav" width="300px">
-    </p>
-</div>
-
-
-
-
-Para no repetir código en cada página de la web e cargado el código HTML en la carga de JS y lo inserto con la función __outerHTML__, lo que hago es realizar una querySelector del id cabecera y sobrescribo el __Div__ vacío que hay en cada archivo por el menú de navegación, no es la forma más segura de hacerlo, lo ideal sería realizar la creación de cada elemento como se hizo con las empresas, pero así he probado distintas formas de cargar código y de la otra forma me ha dado luego más problemas con el __CSS__. (Pequeño fragmento de código)
-
-```
-const container = document.querySelector(".cabecera");
-container.outerHTML="<a class='navbar-brand' href='index.html'><img id='imgLogo' src='images/fotoMC.png' alt='FotoPerfil' /> Miguel Correa </a>"+
-
-"<button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>"+
-                "<span class='navbar-toggler-icon'></span></button>"+
-```
-
-## WAVE
-***
-Se ha examinado minuciosamente con la extensión de WAVE los posibles errores de accesibilidad y actualmente no tiene ninguno, salvo uno de contraste en el botón de enviar del formulario de contacto.
-
-## Nota aclarativa
-***
-La validación del formulario actualmente no esta funcionando, he revisado y al realizar la configuración previa para import/Export de la clase, ha dejado de funcionar, en pruebas anteriores si estaba incompleto algún campo, saltaba un error y si la dirección  de correo estaba mal estructurada tambien avisaba.
