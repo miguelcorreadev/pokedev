@@ -1,126 +1,141 @@
-# T4.1DevDoc UX UI Accesibilidad Inclusividad 
+# T4.2Dev Promesas y Async/Await
 
-[Enlace al Proyecto](https://miguelcorreadev.github.io/miguelcorrea/index.html)
+[Enlace al Proyecto PokeDev](https://miguelcorreadev.github.io/pokedev/)
 ## Tabla de contenidos
-1. [Leyes UX](#Leyes_ux)
-2. [Tecnologías](#tecnologias)
-3. [Javascript](#javascript)
-4. [Navegación](#navegacion)
+1. [Proyecto](#proyecto)
+2. [Promises](#promises)
+3. [Async/Await](#async/await)
+4. [Errores usando try/catch/throw/error](#errores_usando_try/catch/throw/error)
+5. [Funciones arrow](#funciones_arrow)
 
-## Leyes UX 
+
+## Proyecto 
 ***
-En este proyecto se han aplicado las siguientes __leyes UX__: 
-* __Ley de Fitts__: establece que cuanto más grande sea un objeto y más cerca esté de nosotros, más fácil será alcanzarlo, influyó en la convención de hacer que los botones interactivos sean más grandes.
+ __PokeDev__ 
+
+Este proyecto se realiza como ejercicio para manejar el asincronismo y trabajar con operaciones que llevan tiempo, como llamar a una API. 
+
+Se trata de una Web que realiza las peticiones a la PokeApi, de esta se sacan los datos de cada Pokemon, inicialmente las imágenes se cogían también de también, pero no me convencia la calidad y he buscado otra opción en: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png, las cuales tienen mucha más calidad.
 
 <div>
     <p style = 'text-align:center;'>
-    <img src="https://miguelcorreadev.github.io/miguelcorrea/DOC/imagenes/Fitts.png" alt="Fitts" width="600px">
+    <img src="https://miguelcorreadev.github.io/pokedev/Doc/images/pokedev.png" alt="Fitts" width="600px">
+    </p>
+</div>
+
+El funcionamiento de la búsqueda es sencillo, en el campo input podremos buscar por el nombre del Pokemon o por su id, la siguiente opción es buscar por __Promises__ o __Async/Await__ y a continuación haremos clic en el botón de buscar.
+
+<div>
+    <p style = 'text-align:center;'>
+    <img src="https://miguelcorreadev.github.io/pokedev/Doc/images/nav_busqueda.png" alt="Fitts" width="600px">
+    </p>
+</div>
+
+Cuando la búsqueda es correcta, nos mostrará en pantalla únicamente ese Pokemon, si queremos que vuelvan a apareces todos podemos hacer clic en el logo de __PokeDev__ en la parte superior izquierda o realizar una __búsqueda vacía__.
+<div>
+    <p style = 'text-align:center;'>
+    <img src="https://miguelcorreadev.github.io/pokedev/Doc/images/busqueda.png" alt="Fitts" width="600px">
+    </p>
+</div>
+
+Si hacemos clic sobre cualquier Pokemon, se nos abrirá una pequeña ventana modal en el centro de la pantalla con más información sobre ese Pokemon y en la gran mayoría se sustituye la imagen por un gif en movimiento para dar una sensación de interactividad.
+
+Esta programado que si de algún Pokemon no tuviera gif, que lo sustituya por la misma imagen que tiene en la ventana principal.
+
+<div>
+    <p style = 'text-align:center;'>
+    <img src="https://projectpokemon.org/images/normal-sprite/charmander.gif" alt="Fitts" width="150px">
+    </p>
+</div>
+
+En los modales encontraremos dos botones verdes para movernos entre los pokemons próximos y un tercer botón rojo para cerrarlo.
+
+<div>
+    <p style = 'text-align:center;'>
+    <img src="https://miguelcorreadev.github.io/pokedev/Doc/images/modal.png" alt="Fitts" width="600px">
+    </p>
+</div>
+
+En la parte inferior de cada página encontraremos un menú de paginación para poder ir avanzando y ver los cientos de Pokemons que hay cargados.
+
+<div>
+    <p style = 'text-align:center;'>
+    <img src="https://miguelcorreadev.github.io/pokedev/Doc/images/paginacion.png" alt="Fitts" width="600px">
     </p>
 </div>
 
 
-* __Ley de Jakob__: usar patrones familiares en el diseño para facilitar la experiencia del usuario, uso de un menú sencillo y web minimalista.
-* __Efecto de estética-usabilidad__: Interfaz atractiva con imagen visual.
-* __Ley de Postel__: En el formulario de contacto se avisa mediante un alert, si se introduce una estructura de la dirección de email incorrecta o si falta algún campo.
-* __Umbral de Doherty__: En la página de inicio aparece una animación que nos hace percibir que se esta cargando.
-<div>
-    <p style = 'text-align:center;'>
-    <img src="https://miguelcorreadev.github.io/miguelcorrea/DOC/imagenes/Doherty.png" alt="Doherty" width="200px">
-    </p>
-</div>
-
-* __Principio de la Navaja de Occam__: Diseño limpio y minimalista, se puede observar que existe un flujo de navegación claro, el usuario siempre sabe donde esta, el menu queda sobreado en azul en la sección correspondiente (Se puede observar en la captura de la Ley de Fitts).
-
-
-## Tecnologias
+## Promises 
 ***
-En este proyecto se ha utilizado las siguientes tecnologías:
-* JavaScript
-* HTML
-* CSS
-* Bootstrap
+Promesa en JavaScript, es un objeto que sirve para reservar el resultado de una operación futura.
 
-## Javascript
+Este resultado llega a través de una operación asíncrona como puede ser una petición HTTP o una lectura de ficheros, que son operaciones no instantáneas, que requieren un tiempo, aunque sea pequeño, para ejecutarse y finalizar.
+
+Este sería el método que utilizo para realizar la busqueda de lo que se escribe en el input del formulario que se pasa a la función como parámetro
+
+```
+function searchPokemonWithPromises(term) {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${term}?language=es`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('No se encontró ningún Pokémon con el nombre o id especificado.');
+            }
+            return response.json();
+        })
+        .then(data => {
+            displayPokemon(data);
+        })
+        .catch(error => {
+            alert('Hubo un error al buscar el Pokémon.');
+            fetchPokemons();
+        });
+}
+```
+
+
+
+## Async/Await
 ***
-### Import - Export
-La parte de Javascript consta inicialmente de dos archivos JS el primero es __scripts.js__, donde encontraremos prácticamente todo el código utilizado en la web y donde se realiza el __import__ del segundo archivo llamado __Empresa.js__, en el encontraremos una clase en JS exportada con el nombre de Empresa, en ella hay un constructor donde le pasamos por parámetros el id, nombre, imagen, url, y fechas, a continuación tenemos los métodos __get_ para recuperar cada uno de los datos.
-```
- export class Empresa{
-    constructor(id, nombre, imagen, url, fechas){
-        this._id = id;
-        this._nombre = nombre;
-        this._imagen = imagen;
-        this._url = url;
-        this._fechas = fechas
-    }
-    getId(){
-        return this._id;
-    }
-    ...
-```
-```
-import { Empresa } from "./Empresa.js";
-```
-En cada uno de los  archivos HTML cargamos/llamamos a __scripts.js__ de la siguiente manera, con type="module".
-```
-<script type="module" src="js/scripts.js"></script>
-```
-### Función Arrow
-Se utiliza para retrasar la carga del contenido del index.html durante 3 segundos para similar que esta cargando el contenido.
-```
-setTimeout(() => {
-                mostrarTextoIndex();
-            }, 3000);
-```
-### Instancia de objetos
-En la página de __experiencia.html__ he instanciado en este caso 3 objetos, que serian las 3 empresas donde he trabajado, lo bueno de hacerlo de esta forma es que si crece la cantidad de empresas, con instanciarla ya se generará automaticamte en la web.  <br>
-__Nota__: en la captura de la Ley de Fitts se puede observar las 3 empresas creadas.
-```
-empresa1 = new Empresa("1", "Square Concept (Malta)", "./images/squareConcept.png", "http://www.squareconcept.com/", "09/2006 -11/2006");
+En JavaScript, las __funciones asíncronas__ son muy importantes debido a la naturaleza de un solo subproceso de JavaScript. Con la ayuda de funciones asíncronas, el bucle de eventos de JavaScript puede encargarse de otras cosas cuando la función solicita algún otro recurso.
 
-empresa2 = new Empresa("2", "Informática Scape", "./images/LOGO SCAPE.png", "https://scapeinformatica.com/", "01/2007 - 06/2012");
+La palabra clave async se añade a las funciones para que devuelvan una promesa en lugar de un valor directamente y con el bloque __try catch__ podemos manejar los errores.
 
-empresa3 = new Empresa("3", "InforServer S.L.", "./images/is.png", "http://www.inforserver.es/", "01/2007 - 06/2012");
+```
+async function searchPokemonWithAsyncAwait(term) {
+    try {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${term}`);
+        if (!response.ok) {
+            throw new Error('No se encontró ningún Pokémon con el nombre o id especificado.');
+        }
+        const data = await response.json();
+        displayPokemon(data);
+    } catch (error) {
+        alert('Hubo un error al buscar el Pokémon.');
+        fetchPokemons();
+    }
+}
+```
+
+## Errores usando try/catch/throw/error
+***
+Como se puede apreciar el las funciones anteriores utilizamos try-Catch para manejar los posibles errores.
+
+## Funciones arrow
+***
+Se puede observar a lo largo del código de fichero main.js la utilización de funcionses arrow => lo que nos va a permitir definir una función de manera compacta y tendremos un código más conciso y limpio.
 ``` 
-Inicialmente se ha intentado pasar los datos de un archivo JSON, cargarlos en un array o lista y recorriendolo ir realizando la instancia de cada objeto empresa, pero por varios motivos no se pudo realizar en este punto, queda para proximas mejoras.
-
-La 3 variables de empresa se han tenido que declarar con let y de una forma global (aunque no es recomendado), para poder utilizarlas en distintas funciones independientes.
+searchForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
 ```
-let empresa1;
-let empresa2;
-let empresa3;
-```
-
-Todos los elementos html de las empresas se ha creado mediante elementos y dinamicamente dentro de un bucle for, desde el código JS, este es un pequeño fragmento:
-
-```
-// Crea el contenedor principal
-const empresaDiv = document.createElement('div');
-empresaDiv.classList.add('col-sm-3', 'experiencia');
-empresaDiv.addEventListener('mouseover',() => mostrarDescripcion(i+ 1));
-
-empresaDiv.addEventListener('mouseout', ocultarDescripcion);
-
-// Crea el enlace
-const empresaLink = document.createElement('a');
-empresaLink.href = empresa.getUrl();
-empresaLink.id = `empresa${i + 1}`;
-empresaLink.target = "_blank"; 
-
-// Crea la imagen
-const empresaImg = document.createElement('img');
-empresaImg.src = empresa.getImagen();
-empresaImg.alt = empresa.getNombre();
-```
-## Navegacion
-***
-En la página web hay dos tipos de navegaciones, una para pc o pantallas de una mayor resolución donde utilizaremos los distintos enlaces que se distribuyen de izquierda a derecha para volver al index presionaremos el primero por la izquierda y los otros presentan el nombre de cada sección  
-
-<div>
-    <p style = 'text-align:center;'>
-    <img src="https://miguelcorreadev.github.io/miguelcorrea/DOC/imagenes/nav.png" alt="Nav" width="700px">
-    </p>
-</div>
+``` 
+pokemonContainer.addEventListener('click', (e) => {
+    const card = e.target.closest('.card');
+    if (card) {
+        const pokemonId = card.dataset.id;
+        fetchPokemonDetails(pokemonId);
+    }
+});
+``` 
 
 Por otro lado, cuando pasamos a pantallas más pequeñas o con menos resolución el menú anterior se adapta a un menú de hamburguesa donde tendremos un pequeño icono con 3 rallas horizontales que al presionarlo se nos desplegará  el menú hacia debajo de forma vertical.
 
@@ -129,6 +144,8 @@ Por otro lado, cuando pasamos a pantallas más pequeñas o con menos resolución
     <img src="https://miguelcorreadev.github.io/miguelcorrea/DOC/imagenes/nav-h.png" alt="Nav" width="300px">
     </p>
 </div>
+
+
 
 
 Para no repetir código en cada página de la web e cargado el código HTML en la carga de JS y lo inserto con la función __outerHTML__, lo que hago es realizar una querySelector del id cabecera y sobrescribo el __Div__ vacío que hay en cada archivo por el menú de navegación, no es la forma más segura de hacerlo, lo ideal sería realizar la creación de cada elemento como se hizo con las empresas, pero así he probado distintas formas de cargar código y de la otra forma me ha dado luego más problemas con el __CSS__. (Pequeño fragmento de código)

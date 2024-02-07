@@ -145,7 +145,7 @@ function searchPokemonWithPromises(term) {
     fetch(`https://pokeapi.co/api/v2/pokemon/${term}?language=es`)
         .then(response => {
             if (!response.ok) {
-                throw new Error('No se encontró ningún Pokémon con el término especificado.');
+                throw new Error('No se encontró ningún Pokémon con el nombre o id especificado.');
             }
             return response.json();
         })
@@ -153,7 +153,7 @@ function searchPokemonWithPromises(term) {
             displayPokemon(data);
         })
         .catch(error => {
-            alert('Hubo un error al buscar Pokémon.');
+            alert('Hubo un error al buscar el Pokémon.');
             fetchPokemons();
         });
 }
@@ -162,12 +162,12 @@ async function searchPokemonWithAsyncAwait(term) {
     try {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${term}`);
         if (!response.ok) {
-            throw new Error('No se encontró ningún Pokémon con el término especificado.');
+            throw new Error('No se encontró ningún Pokémon con el nombre o id especificado.');
         }
         const data = await response.json();
         displayPokemon(data);
     } catch (error) {
-        alert('Hubo un error al buscar Pokémon.');
+        alert('Hubo un error al buscar el Pokémon.');
         fetchPokemons();
     }
 }
