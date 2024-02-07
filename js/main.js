@@ -9,25 +9,25 @@ const pokemonDetails = document.getElementById('pokemonDetails');
 
 searchForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const searchTerm = searchInput.value.trim().toLowerCase();;
+    const busqueda = searchInput.value.trim().toLowerCase();;
     const method = searchMethod.value;
     // Limpia el campo de entrada después de usar el valor de búsqueda
     searchInput.value = "";
 
-    if (!searchTerm) {
-        fetchPokemons(); // Si el término de búsqueda está vacío, cargar todos los Pokémon
-        return; // Salir de la función para evitar la búsqueda con un término de búsqueda vacío
+    if (!busqueda) {
+        fetchPokemons(); // Si la busqueda está vacía, cargar todos los Pokemon
+        return; // Salir de la función para evitar la búsqueda con una búsqueda vacío
     }
 
     pokemonContainer.innerHTML = '';
 
     try {
         if (method === '1') {
-            // Búsqueda utilizando promesas
-            searchPokemonWithPromises(searchTerm);
+            // Busqueda utilizando promesas
+            searchPokemonWithPromises(busqueda);
         } else if (method === '2') {
-            // Búsqueda utilizando async/await
-            await searchPokemonWithAsyncAwait(searchTerm);
+            // Busqueda utilizando async/await
+            await searchPokemonWithAsyncAwait(busqueda);
         }
     } catch (error) {
         console.error('Error:', error);
@@ -72,7 +72,7 @@ function displayPokemonDetails(pokemon) {
   nextButton.classList.add('nav-button', 'next-button');
   nextButton.addEventListener('click', () => navigatePokemon(1));
 
-  // Crear el botón de cierre (x)
+  // Crear el botón de cierre 
   const closeButton = document.createElement('button');
   closeButton.innerHTML = '&times;'; // Agrega el símbolo x
   closeButton.classList.add('close-button');
@@ -94,17 +94,17 @@ img.onerror = () => {
 };
   img.alt = pokemon.name;
 
-  const idParagraph = document.createElement('p');
-  idParagraph.textContent = `ID: ${pokemon.id}`;
+  const idParrafo = document.createElement('p');
+  idParrafo.textContent = `ID: ${pokemon.id}`;
 
-  const weightParagraph = document.createElement('p');
-  weightParagraph.textContent = `Peso: ${pokemon.weight/10} kg`;
+  const weightParrafo = document.createElement('p');
+  weightParrafo.textContent = `Peso: ${pokemon.weight/10} kg`;
 
-  const heightParagraph = document.createElement('p');
-  heightParagraph.textContent = `Altura: ${pokemon.height/10} m`;
+  const heightParrafo = document.createElement('p');
+  heightParrafo.textContent = `Altura: ${pokemon.height/10} m`;
 
-  const abilitiesParagraph = document.createElement('p');
-  abilitiesParagraph.textContent = `Habilidades: ${pokemon.abilities.map(ability => ability.ability.name).join(', ')}`;
+  const abilitiesParrafo = document.createElement('p');
+  abilitiesParrafo.textContent = `Habilidades: ${pokemon.abilities.map(ability => ability.ability.name).join(', ')}`;
 
   // Agregar los elementos al contenedor
   pokemonDetails.appendChild(closeButton);
@@ -112,10 +112,10 @@ img.onerror = () => {
   pokemonDetails.appendChild(nextButton);
   pokemonDetails.appendChild(heading);
   pokemonDetails.appendChild(img);
-  pokemonDetails.appendChild(idParagraph);
-  pokemonDetails.appendChild(weightParagraph);
-  pokemonDetails.appendChild(heightParagraph);
-  pokemonDetails.appendChild(abilitiesParagraph);
+  pokemonDetails.appendChild(idParrafo);
+  pokemonDetails.appendChild(weightParrafo);
+  pokemonDetails.appendChild(heightParrafo);
+  pokemonDetails.appendChild(abilitiesParrafo);
 
   // Agregar la clase para el estilo del modal
   pokemonDetails.classList.add('modal-content');
@@ -131,8 +131,6 @@ function navigatePokemon(direction) {
   // Cargar y mostrar el próximo Pokémon
   fetchPokemonDetails(nextPokemonId);
 }
-
-// Función para cerrar el modal
 
 function openModal() {
     pokemonModal.style.display = 'block';
@@ -155,18 +153,26 @@ function searchPokemonWithPromises(term) {
             displayPokemon(data);
         })
         .catch(error => {
-            console.error('Error:', error);
+            //console.error('Error:', error);
+            alert('Hubo un error al buscar Pokémon.');
             fetchPokemons();
         });
 }
 
 async function searchPokemonWithAsyncAwait(term) {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${term}`);
-    if (!response.ok) {
-        throw new Error('No se encontró ningún Pokémon con el término especificado.');
+    try {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${term}`);
+        if (!response.ok) {
+            throw new Error('No se encontró ningún Pokémon con el término especificado.');
+        }
+        const data = await response.json();
+        displayPokemon(data);
+    } catch (error) {
+        alert('Hubo un error al buscar Pokémon.');
+        fetchPokemons();
+        //console.error('Se produjo un error al buscar el Pokémon:', error.message);
+        // Aquí puedes agregar cualquier manejo adicional del error, como mostrar un mensaje al usuario
     }
-    const data = await response.json();
-    displayPokemon(data);
 }
 
 function displayPokemon(pokemon) {
@@ -190,9 +196,9 @@ function displayPokemon(pokemon) {
     const capitalizedPokemonName = pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
     title.textContent = capitalizedPokemonName;
 
-    const idParagraph = document.createElement('p');
-    idParagraph.classList.add('card-text');
-    idParagraph.textContent = `ID: ${pokemon.id}`;
+    const idParrafo = document.createElement('p');
+    idParrafo.classList.add('card-text');
+    idParrafo.textContent = `ID: ${pokemon.id}`;
     
     const typesParagraph = document.createElement('p');
     typesParagraph.classList.add('card-tipo');
@@ -211,7 +217,7 @@ function displayPokemon(pokemon) {
 
     cardBody.appendChild(img);
     cardBody.appendChild(title);
-    cardBody.appendChild(idParagraph);
+    cardBody.appendChild(idParrafo);
     cardBody.appendChild(typesParagraph);
     card.appendChild(cardBody);
 
