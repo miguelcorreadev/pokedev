@@ -86,8 +86,8 @@ function displayPokemonDetails(pokemon) {
 
   const img = document.createElement('img');
   // Intentar cargar la imagen gif
-img.src = `https://projectpokemon.org/images/normal-sprite/${pokemon.name}.gif`;
-img.onerror = () => {
+    img.src = `https://projectpokemon.org/images/normal-sprite/${pokemon.name}.gif`;
+    img.onerror = () => {
     // Si falla la carga del gif, cargar la imagen alternativa
     img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`
     //img.src = pokemon.sprites.other['official-artwork'].front_default;
@@ -153,7 +153,6 @@ function searchPokemonWithPromises(term) {
             displayPokemon(data);
         })
         .catch(error => {
-            //console.error('Error:', error);
             alert('Hubo un error al buscar Pokémon.');
             fetchPokemons();
         });
@@ -170,8 +169,6 @@ async function searchPokemonWithAsyncAwait(term) {
     } catch (error) {
         alert('Hubo un error al buscar Pokémon.');
         fetchPokemons();
-        //console.error('Se produjo un error al buscar el Pokémon:', error.message);
-        // Aquí puedes agregar cualquier manejo adicional del error, como mostrar un mensaje al usuario
     }
 }
 

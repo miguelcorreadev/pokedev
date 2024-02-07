@@ -181,11 +181,12 @@
   }
   .card-tipo.normal, flying
   {
-    cackground: linear-gradient(to right, #83d3f3, #f1e74d);
+    background: linear-gradient(to right, #83d3f3, #f1e74d);
   }
   .card-tipo.poison
   {
     background-color: #8f1cec; 
+    color: rgb(253, 252, 252);
   }
   .card-tipo.electric
   {
