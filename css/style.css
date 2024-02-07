@@ -48,7 +48,7 @@
 
 #pokemonDetails {
     width: 30%; /* Ajusta el ancho según tus necesidades */
-    height: 60%;
+    height: 500px;
     position: fixed;
     top: 47%;
     left: 50%;
@@ -61,7 +61,7 @@
     text-align: center
 }
 #pokemonDetails img{
-   width: 150px;
+   width: 170px;
 }
 .close-button{
     float: right;
@@ -84,13 +84,58 @@
         align-items: center;
       }
       #pokemonDetails {
-        width: 80%; /* Ajusta el ancho aquí tus necesidades */
-        height: 60%;
+        width: 400px; /* Ajusta el ancho aquí tus necesidades */
+        height: 500px;
         position: fixed;
-        top: 30%;
+        top: 55%;
         left: 50%;
         transform: translate(-50%, -40%);
     }
+}
+
+.nav-button {
+  /* Estilos comunes para todos los botones de navegación */
+  /* Agrega estilos específicos para todos los botones de navegación aquí */
+}
+
+.next-button {
+  float: right;
+  background-color: #4CAF50; /* Color de fondo */
+  color: white; /* Color del texto */
+  border: none; /* Sin borde */
+  padding: 10px 20px; /* Relleno interno */
+  font-size: 16px; /* Tamaño de la fuente */
+  cursor: pointer; /* Cursor al pasar por encima */
+}
+
+.next-button:hover {
+  /* Estilos cuando el cursor pasa por encima */
+  background-color: #45a049; /* Color de fondo más oscuro */
+}
+
+.prev-button {
+  float: left;
+  background-color: #4CAF50; /* Color de fondo */
+  color: white; /* Color del texto */
+  border: none; /* Sin borde */
+  padding: 10px 20px; /* Relleno interno */
+  font-size: 16px; /* Tamaño de la fuente */
+  cursor: pointer; /* Cursor al pasar por encima */
+}
+
+.prev-button:hover {
+  /* Estilos cuando el cursor pasa por encima */
+  background-color: #45a049; /* Color de fondo más oscuro */
+}
+
+.close-button{
+  float: right;
+  background-color: #fc4a33; /* Color de fondo */
+  color: white; /* Color del texto */
+  border: none; /* Sin borde */
+  padding: 10px 20px; /* Relleno interno */
+  font-size: 16px; /* Tamaño de la fuente */
+  cursor: pointer; /* Cursor al pasar por encima */
 }
 
 #pagination{
@@ -180,4 +225,15 @@
   {
     color: white;
     background-color: #520352; 
+  }
+  .card-tipo.steel
+  {
+    color: rgb(253, 252, 252);
+    background-color: #726f72; 
+  }
+  .card-tipo.ice
+  {
+    border: 2px solid black;
+    background-color: #fdfdfd; 
+    color: black;
   }

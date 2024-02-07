@@ -9,8 +9,10 @@ const pokemonDetails = document.getElementById('pokemonDetails');
 
 searchForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const searchTerm = searchInput.value.trim();
+    const searchTerm = searchInput.value.trim().toLowerCase();;
     const method = searchMethod.value;
+    // Limpia el campo de entrada después de usar el valor de búsqueda
+    searchInput.value = "";
 
     if (!searchTerm) {
         fetchPokemons(); // Si el término de búsqueda está vacío, cargar todos los Pokémon
@@ -83,8 +85,13 @@ function displayPokemonDetails(pokemon) {
     heading.textContent = capitalizedPokemonName;
 
   const img = document.createElement('img');
-  img.src = `https://projectpokemon.org/images/normal-sprite/${pokemon.name}.gif`;
-  //img.src = `${pokemon.sprites.other['official-artwork'].front_default}`;
+  // Intentar cargar la imagen gif
+img.src = `https://projectpokemon.org/images/normal-sprite/${pokemon.name}.gif`;
+img.onerror = () => {
+    // Si falla la carga del gif, cargar la imagen alternativa
+    img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`
+    //img.src = pokemon.sprites.other['official-artwork'].front_default;
+};
   img.alt = pokemon.name;
 
   const idParagraph = document.createElement('p');
