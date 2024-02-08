@@ -109,6 +109,25 @@ async function searchPokemonWithAsyncAwait(term) {
 ***
 Como se puede apreciar el las funciones anteriores utilizamos try-Catch para manejar los posibles errores.
 
+Como se puede observar el siguiente fragmento de código se controlan los posibles errores que se puedan ocasionar en la busqueda y si algo falla, a traves del __catch__ nos aparecerá un alert indicandosnos que algo a fallado o que lo que estamos buscando no existe.
+
+```
+ try {
+        if (method === '1') {
+            // Busqueda utilizando promesas
+            searchPokemonWithPromises(busqueda);
+        } else if (method === '2') {
+            // Busqueda utilizando async/await
+            await searchPokemonWithAsyncAwait(busqueda);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Hubo un error al buscar Pokémon.');
+    }
+```
+
+
+
 ## Funciones arrow
 ***
 Se puede observar a lo largo del código de fichero main.js la utilización de funcionses arrow => lo que nos va a permitir definir una función de manera compacta y tendremos un código más conciso y limpio.

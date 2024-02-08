@@ -182,8 +182,9 @@ function displayPokemon(pokemon) {
 
     const img = document.createElement('img');
     img.classList.add('pokemon-img', 'card-img-top', 'img-fluid');
+    img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`;
     //img.src = `https://projectpokemon.org/images/normal-sprite/${pokemon.name}.gif`;
-    img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`
+    //img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`
     img.style.width = '100%';
     img.alt = pokemon.name;
 
@@ -227,8 +228,79 @@ async function translateText(text, targetLanguage) {
     const data = await response.json();
     return data.data.translations[0].translatedText;
 }
-
 function fetchPokemons(page = 1) {
+    const pageSize = 20;
+    const offset = (page - 1) * pageSize;
+    const limit = pageSize;
+    pokemonContainer.innerHTML = '';
+
+    fetch(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`)
+        .then(res => res.json())
+        .then(data => {
+            const promises = data.results.map(pokemon => fetchPokemon(pokemon.name));
+            Promise.all(promises)
+                .then(pokemonData => {
+                    // Ordenar los resultados por ID
+                    pokemonData.sort((a, b) => a.id - b.id);
+                    // Crear un array para almacenar las tarjetas de Pokémon
+                    const pokemonCards = [];
+                    // Crear y almacenar las tarjetas de Pokémon
+                    pokemonData.forEach(pokemon => {
+                        const card = createPokemonCard(pokemon);
+                        pokemonCards.push(card);
+                    });
+                    // Agregar las tarjetas de Pokémon al contenedor
+                    pokemonCards.forEach(card => {
+                        pokemonContainer.appendChild(card);
+                    });
+                    // Renderizar la paginación
+                    renderPagination(page, Math.ceil(data.count / pageSize));
+                })
+                .catch(error => {
+                    console.error('Error al obtener los Pokémon:', error);
+                });
+        });
+}
+
+function createPokemonCard(pokemon) {
+    const card = document.createElement('div');
+    card.classList.add('card', 'col-md-3', 'mb-3');
+    card.dataset.id = pokemon.id;
+
+    const cardBody = document.createElement('div');
+    cardBody.classList.add('card-body');
+
+    const img = document.createElement('img');
+    img.classList.add('pokemon-img', 'card-img-top', 'img-fluid');
+    img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`;
+    img.style.width = '100%';
+    img.alt = pokemon.name;
+
+    const title = document.createElement('h5');
+    title.classList.add('card-title');
+    const capitalizedPokemonName = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
+    title.textContent = capitalizedPokemonName;
+
+    const idParrafo = document.createElement('p');
+    idParrafo.classList.add('card-text');
+    idParrafo.textContent = `ID: ${pokemon.id}`;
+    
+    const typesParagraph = document.createElement('p');
+    typesParagraph.classList.add('card-tipo');
+    const types = pokemon.types.map(type => type.type.name);
+    typesParagraph.textContent = types.join(', ');
+
+    cardBody.appendChild(img);
+    cardBody.appendChild(title);
+    cardBody.appendChild(idParrafo);
+    cardBody.appendChild(typesParagraph);
+    card.appendChild(cardBody);
+
+    return card;
+}
+
+
+/*function fetchPokemons(page = 1) {
     const pageSize = 20;
     const offset = (page - 1) * pageSize;
     const limit = pageSize;
@@ -242,7 +314,7 @@ function fetchPokemons(page = 1) {
             });
             renderPagination(page, Math.ceil(data.count / pageSize));
         });
-}
+}*/
 
 fetchPokemons();
 
