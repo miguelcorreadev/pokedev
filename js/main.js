@@ -37,7 +37,10 @@ searchForm.addEventListener('submit', async (e) => {
     }
 });
 
+
+
 pokemonContainer.addEventListener('click', (e) => {
+    e.stopPropagation();
     const card = e.target.closest('.card');
     if (card) {
         const pokemonId = card.dataset.id;
@@ -50,6 +53,9 @@ function fetchPokemonDetails(id) {
         .then(res => res.json())
         .then(data => {
             displayPokemonDetails(data);
+            if (pokemonModal.style.display === 'block') {
+                closeModal(); // Cerrar el modal abierto actualmente
+            }
             openModal();
         })
         .catch(error => console.error('Error fetching Pokémon details:', error));
@@ -276,22 +282,6 @@ function createPokemonCard(pokemon) {
     return card;
 }
 
-
-// function fetchPokemons(page = 1) {
-//     const pageSize = 20;
-//     const offset = (page - 1) * pageSize;
-//     const limit = pageSize;
-//     pokemonContainer.innerHTML = '';
-
-//     fetch(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`)
-//         .then(res => res.json())
-//         .then(data => {
-//             data.results.forEach(pokemon => {
-//                 fetchPokemon(pokemon.name);
-//             });
-//             renderPagination(page, Math.ceil(data.count / pageSize));
-//         });
-// }
 function fetchPokemons(page = 1) {
     const pageSize = 20;
     const offset = (page - 1) * pageSize;
