@@ -14,6 +14,7 @@
 }
 #searchButton{
     margin-left: 100px;
+    font-weight: bold;
 }
 #searchMethod{
     margin-left: 20px;
@@ -180,8 +181,8 @@
   {
     background-color: #b0e6f0; 
   }
-  .card-tipo.normal, flying
-  {
+  .card-tipo.normal,
+  .card-tipo.flying {
     background: linear-gradient(to right, #83d3f3, #f1e74d);
   }
   .card-tipo.poison

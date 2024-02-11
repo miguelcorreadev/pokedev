@@ -9,24 +9,26 @@ const pokemonDetails = document.getElementById('pokemonDetails');
 
 searchForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const busqueda = searchInput.value.trim().toLowerCase();;
+    const busqueda = searchInput.value.trim().toLowerCase();
     const method = searchMethod.value;
     // Limpia el campo de entrada después de usar el valor de búsqueda
     searchInput.value = "";
-
     if (!busqueda) {
-        fetchPokemons(); // Si la busqueda está vacía, cargar todos los Pokemon
-        return; // Salir de la función para evitar la búsqueda con una búsqueda vacío
+        // Si la búsqueda está vacía, cargar todos los Pokémon
+            fetchPokemons();
+        return; // Salir de la función para evitar la búsqueda con una búsqueda vacía
+    }else{
+        
     }
 
     pokemonContainer.innerHTML = '';
 
     try {
         if (method === '1') {
-            // Busqueda utilizando promesas
+            // Búsqueda utilizando promesas
             searchPokemonWithPromises(busqueda);
         } else if (method === '2') {
-            // Busqueda utilizando async/await
+            // Búsqueda utilizando async/await
             await searchPokemonWithAsyncAwait(busqueda);
         }
     } catch (error) {
@@ -182,9 +184,9 @@ function displayPokemon(pokemon) {
 
     const img = document.createElement('img');
     img.classList.add('pokemon-img', 'card-img-top', 'img-fluid');
-    img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`;
+    //img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`;
     //img.src = `https://projectpokemon.org/images/normal-sprite/${pokemon.name}.gif`;
-    //img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`
+    img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`
     img.style.width = '100%';
     img.alt = pokemon.name;
 
@@ -228,39 +230,7 @@ async function translateText(text, targetLanguage) {
     const data = await response.json();
     return data.data.translations[0].translatedText;
 }
-function fetchPokemons(page = 1) {
-    const pageSize = 20;
-    const offset = (page - 1) * pageSize;
-    const limit = pageSize;
-    pokemonContainer.innerHTML = '';
 
-    fetch(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`)
-        .then(res => res.json())
-        .then(data => {
-            const promises = data.results.map(pokemon => fetchPokemon(pokemon.name));
-            Promise.all(promises)
-                .then(pokemonData => {
-                    // Ordenar los resultados por ID
-                    pokemonData.sort((a, b) => a.id - b.id);
-                    // Crear un array para almacenar las tarjetas de Pokémon
-                    const pokemonCards = [];
-                    // Crear y almacenar las tarjetas de Pokémon
-                    pokemonData.forEach(pokemon => {
-                        const card = createPokemonCard(pokemon);
-                        pokemonCards.push(card);
-                    });
-                    // Agregar las tarjetas de Pokémon al contenedor
-                    pokemonCards.forEach(card => {
-                        pokemonContainer.appendChild(card);
-                    });
-                    // Renderizar la paginación
-                    renderPagination(page, Math.ceil(data.count / pageSize));
-                })
-                .catch(error => {
-                    console.error('Error al obtener los Pokémon:', error);
-                });
-        });
-}
 
 function createPokemonCard(pokemon) {
     const card = document.createElement('div');
@@ -272,7 +242,7 @@ function createPokemonCard(pokemon) {
 
     const img = document.createElement('img');
     img.classList.add('pokemon-img', 'card-img-top', 'img-fluid');
-    img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`;
+    img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`;
     img.style.width = '100%';
     img.alt = pokemon.name;
 
@@ -287,7 +257,14 @@ function createPokemonCard(pokemon) {
     
     const typesParagraph = document.createElement('p');
     typesParagraph.classList.add('card-tipo');
+    
+    // Obtener los nombres de los tipos del Pokémon y agregar clases correspondientes
     const types = pokemon.types.map(type => type.type.name);
+    types.forEach(type => {
+        typesParagraph.classList.add(type);
+    });
+    
+    // Establecer el texto del párrafo con los tipos del Pokémon
     typesParagraph.textContent = types.join(', ');
 
     cardBody.appendChild(img);
@@ -300,7 +277,22 @@ function createPokemonCard(pokemon) {
 }
 
 
-/*function fetchPokemons(page = 1) {
+// function fetchPokemons(page = 1) {
+//     const pageSize = 20;
+//     const offset = (page - 1) * pageSize;
+//     const limit = pageSize;
+//     pokemonContainer.innerHTML = '';
+
+//     fetch(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`)
+//         .then(res => res.json())
+//         .then(data => {
+//             data.results.forEach(pokemon => {
+//                 fetchPokemon(pokemon.name);
+//             });
+//             renderPagination(page, Math.ceil(data.count / pageSize));
+//         });
+// }
+function fetchPokemons(page = 1) {
     const pageSize = 20;
     const offset = (page - 1) * pageSize;
     const limit = pageSize;
@@ -309,14 +301,50 @@ function createPokemonCard(pokemon) {
     fetch(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`)
         .then(res => res.json())
         .then(data => {
-            data.results.forEach(pokemon => {
-                fetchPokemon(pokemon.name);
+            // Almacenar las tarjetas de Pokémon en un objeto con el ID como clave
+            const pokemonCardsMap = {};
+            
+            // Crear un array para almacenar el orden de los Pokémon
+            const pokemonOrder = [];
+            
+            // Crear promesas para obtener los detalles de cada Pokémon
+            const promises = data.results.map(pokemon => {
+                return fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`)
+                    .then(res => res.json())
+                    .then(pokemonData => {
+                        // Crear la tarjeta del Pokémon
+                        const card = createPokemonCard(pokemonData);
+                        // Almacenar la tarjeta en el objeto usando el ID del Pokémon como clave
+                        pokemonCardsMap[pokemonData.id] = card;
+                        // Agregar el ID del Pokémon al array de orden
+                        pokemonOrder.push(pokemonData.id);
+                    });
             });
-            renderPagination(page, Math.ceil(data.count / pageSize));
-        });
-}*/
 
-fetchPokemons();
+            // Esperar a que todas las promesas se resuelvan
+            Promise.all(promises)
+                .then(() => {
+                    // Ordenar el array de IDs de Pokémon
+                    pokemonOrder.sort((a, b) => a - b);
+                    // Agregar las tarjetas al contenedor en el orden correcto
+                    pokemonOrder.forEach(pokemonId => {
+                        pokemonContainer.appendChild(pokemonCardsMap[pokemonId]);
+                    });
+                    // Renderizar la paginación
+                    renderPagination(page, Math.ceil(data.count / pageSize));
+                })
+                .catch(error => {
+                    console.error('Error al obtener los detalles de los Pokémon:', error);
+                });
+        })
+        .catch(error => {
+            console.error('Error al obtener la lista de Pokémon:', error);
+        });
+}
+
+
+
+
 
 function fetchPokemon(name) {
     fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
@@ -386,5 +414,6 @@ navbarBrandLink.addEventListener('click', function(event) {
   event.preventDefault(); // Evitar que el enlace cambie de página
   
   // Llamar a la función fetchPokemons()
-  fetchPokemons();
+ 
 });
+fetchPokemons();

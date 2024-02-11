@@ -7,6 +7,9 @@
 3. [Async/Await](#async/await)
 4. [Errores usando try/catch/throw/error](#errores_usando_try/catch/throw/error)
 5. [Funciones arrow](#funciones_arrow)
+6. [Carga Ordenación](#Carga-ordenación)
+
+
 
 
 ## Proyecto 
@@ -144,4 +147,29 @@ pokemonContainer.addEventListener('click', (e) => {
     }
 });
 ``` 
+## Carga Ordenación
+Un problema que me he encontrado es que cada vez que se refrescaba la página o se hacía una busqueda con el campo vacio, el orden de los card pokemon variaba y nunca los mostraba correctamente, después de investigar se ha creado un objeto __pokemonCardsMap__  para almacenar las cards pokemon y un array __pokemonOrder__ para almacenar el orden en el que se mostraran, después se utiliza Promise.all() para esperar a que todas las promesas se resuelvan para posteriromente ordenar las cards.
+``` 
+ .then(data => {
+            // Almacenar las tarjetas de Pokémon en un objeto con el ID como clave
+            const pokemonCardsMap = {};
+            
+            // Crear un array para almacenar el orden de los Pokémon
+            const pokemonOrder = [];
+            
+            // Crear promesas para obtener los detalles de cada Pokémon
+            const promises = data.results.map(pokemon => {
+                return fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`)
+                    .then(res => res.json())
+                    .then(pokemonData => {
+                        // Crear la tarjeta del Pokémon
+                        const card = createPokemonCard(pokemonData);
+                        // Almacenar la tarjeta en el objeto usando el ID del Pokémon como clave
+                        pokemonCardsMap[pokemonData.id] = card;
+                        // Agregar el ID del Pokémon al array de orden
+                        pokemonOrder.push(pokemonData.id);
+                    });
+            });
+```
+Se han realizado pruebas de carga, porque debido a estos últimos cambios pensaba que podian afectar al tiempo o rendimiento de carga y apenas se nota.
 
